@@ -2,12 +2,11 @@
 Esewa Online Payment
 
 
-## ABout esewaEpay
+## About esewaEpay
 **esewaEpay** is PHP library designed to simplify the task of making online payment via Esewa service.
 
 ```php
 $epay->pay(Request $request);
-});
 ```
 
 ## Documentation
