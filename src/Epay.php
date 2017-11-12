@@ -8,8 +8,7 @@ use GuzzleHttp\Exception\BadResponseException;
 /**
 *  Esewa Payment Class
 *
-*  Use this section to define what this class is doing, the PHPDocumentator will use this
-*  to automatically generate an API documentation using this information.
+*  esewaEpay is PHP library designed to simplify the task of making online payment via Esewa service
 *
 *  @author KtmCodeLabs
 */
