@@ -129,7 +129,7 @@ class Epay{
       *
       * @return success or failure
       */
-	public function verifyTxn($rid=''){
+	public function verifyTxn($rid='',$pid,$amt){
 		if($rid == '') {
 			$this->response['error'] = true;
 			$this->response['success'] = false;
@@ -139,8 +139,8 @@ class Epay{
 
 		$postparams = array(
 			'rid'=>$rid,
-			'pid'=>$this->pid,
-			'amt'=>$this->amt,
+			'pid'=>$pid,
+			'amt'=>$amt,
 			'scd'=>$this->scd
 		);
 		$client = new Client();
