@@ -6,6 +6,8 @@ Esewa Online Payment
 **esewaEpay** is PHP library designed to simplify the task of making online payment via Esewa service.
 
 ```php
+use Ktmcodelabs\Esewa\Epay;
+$epay = new Epay($merchantID);
 $epay->pay(Request $request);
 ```
 
