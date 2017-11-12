@@ -1,0 +1,29 @@
+{
+    "name": "ktmcodelabs/esewaepay",
+    "description": "Esewa Epay",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sujan Byanjankar",
+            "email": "byanjankarsujan@gmail.com"
+        }
+    ],
+    "keywords": [
+        "esewa",
+        "epay",
+        "online",
+        "payment"
+    ],
+    "homepage": "http://sujanbyanjankar.com.np",
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Ktmcodelabs\\Esewa\\": "src"
+        }
+    },
+    "require": {
+    	"guzzlehttp/guzzle": "^6.2.*",
+    	"illuminate/http":"5.5.*"
+    }
+}
