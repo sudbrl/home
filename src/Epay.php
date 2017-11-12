@@ -46,6 +46,7 @@ class Epay{
 	private $fu;
 
 	/** @var string vu Transaction verification url */
+	private $vu;
 
 	/** @var string response Response for the request */
 	private $res = '';
@@ -57,7 +58,26 @@ class Epay{
       * Initiate
       *
       */
-	public function __construct(){
+	public function __construct($mcode){
+		$this->scd = $mcode;
+	}
+
+	/**
+      * Set URLs
+      *
+      * Set payment url and response urls (success,failure)
+      *
+      * @param Request $request Request post string
+      *
+      * @return Response from the payment gateway
+      */
+	public function setUrl(array $urls){
+		$rUrls = array('pay_url','su','fu','vu');
+		foreach($rUrls as $k=>$v){
+			if(array_key_exists($k, $urls)){
+				$this->$k = $urls[$k];
+			}
+		}
 	}
 
 	/**
@@ -74,6 +94,30 @@ class Epay{
 			return $this->response;
 		};
 
+		$this->tAmt = $this->amt + $this->txAmt + $this->psc + $this->pdc;
+		$postparams = array(
+			'amt'=>$this->amt,
+			'txAmt'=>$this->txAmt,
+			'psc'=>$this->psc,
+			'pdc'=>$this->pdc,
+			'tAmt'=>$this->tAmt,
+			'scd'=>$this->$scd,
+			'pid'=>$this->pid,
+			'su'=>$this->su,
+			'fu'=>$this->fu
+		);
+
+		$client = new Client();
+		$response = $client->request('POST', $this->pay_url, [
+		    'form_params' => $postparams
+		]);
+
+		
+		$this->response['statusCode'] = $response->getStatusCode(); // 200
+		$this->response['reasonPhrase'] = $response->getReasonPhrase(); // OK
+		$this->response['protocolVersion'] = $response->getProtocolVersion(); // 1.1
+		$this->response['body'] = $response->getBody();
+		return $this->response;
 	}
 
 	/**
@@ -85,8 +129,30 @@ class Epay{
       *
       * @return success or failure
       */
-	public function verifyTxn(){
+	public function verifyTxn($rid=''){
+		if($rid == '') {
+			$this->response['error'] = true;
+			$this->response['success'] = false;
+			$this->response['errMessage'] = 'Txn reference ID missing';
+			return false;
+		}
 
+		$postparams = array(
+			'rid'=>$rid,
+			'pid'=>$this->pid,
+			'amt'=>$this->amt,
+			'scd'=>$this->scd
+		);
+		$client = new Client();
+		$response = $client->request('POST', $this->vu, [
+		    'form_params' => $postparams
+		]);
+
+		$this->response['statusCode'] = $response->getStatusCode(); // 200
+		$this->response['reasonPhrase'] = $response->getReasonPhrase(); // OK
+		$this->response['protocolVersion'] = $response->getProtocolVersion(); // 1.1
+		$this->response['body'] = $response->getBody();
+		return $this->response;
 	}
 
 	/**
