@@ -21,9 +21,5 @@
         "psr-4": {
             "Ktmcodelabs\\Esewa\\": "src"
         }
-    },
-    "require": {
-    	"guzzlehttp/guzzle": "6.2.*",
-    	"illuminate/http":"5.5.*"
     }
 }
